@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EEG Real-Time Monitoring</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../static/test.css">
+</head>
+
+<body>
+    <!-- Upload Section -->
+    <section id="uploadSection" class="section">
+        <div class="panel form-panel">
+            <h3>EPletic Seizure Monitoring System</h3>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".edf" id="fileUpload" required>
+                <button type="submit">Upload EEG File</button>
+            </form>
+
+            <!-- Patient Information Form -->
+            <div class="patient-form">
+                <h3>Patient Details</h3>
+                <input type="text" id="patientName" placeholder="Patient Name" required><br>
+                <input type="text" id="caregiverName" placeholder="Caregiver Name" required><br>
+                <input type="text" id="caregiverPhone" placeholder="Caregiver Phone" required><br>
+                <input type="number" id="patientAge" placeholder="Patient Age" required><br>
+                <input type="text" id="patientIssue" placeholder="Patient Issue" required><br>
+                <button id="submitPatientDetails">Submit Details</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="graph-log-container">
+        <!-- Graph Panel -->
+        <div class="graph-panel">
+            <h3 class="panel-header">EEG Data Graph</h3>
+            <div id="chartContainer">
+                <canvas id="graph"></canvas>
+            </div>
+        </div>
+    
+        <!-- Report Panel with EEG Data in Table -->
+        <div class="report-panel">
+            <h3 class="panel-header">EEG Data Log</h3>
+            <!-- Table to Display EEG Data -->
+            <div class="eeg-table-container">
+                <table id="eegTable" class="eeg-table">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>EEG Value</th>
+                            <th>Alerts</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamic rows will be added here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </div>
+    
+    
+    
+
+    <section class="report-section">
+        <div class="panel report-panel">
+            <h2>Patient Report</h2>
+        
+            <div id="patientDetails">
+                <h3>Patient Information</h3>
+                <p><strong>Name:</strong> M Abdullah</p>
+                <p><strong>Caregiver Name:</strong> Amanat</p>
+                <p><strong>Contact:</strong> 03074437119</p>
+                <p><strong>Patient Issue:</strong> Seizure Disorder</p>
+            </div>
+        
+            <div id="seizureTimestamps">
+                <h3>Seizure Timestamps</h3>
+                <ul id="timestampsList">
+                    <!-- Filled dynamically after generating report -->
+                </ul>
+            </div>
+        
+            <div id="eegPlot">
+                <h3>EEG Signal and Prediction</h3>
+                <img id="eegImage" src="" alt="EEG Plot" style="max-width:100%; height:auto;">
+            </div>
+        
+            <!-- Panel for Previewing the Generated Report -->
+            <div id="reportPreview" style="margin-top: 20px;">
+                <h3>Preview Report</h3>
+                <iframe id="reportFrame" src="" style="width:100%; height:500px; border:none;"></iframe>
+            </div>
+        
+            <div class="report-buttons">
+                <button id="generateReportBtn">Generate Report</button>
+                <button id="downloadReportBtn" style="display: none;">Download Report</button>
+            </div>
+        </div>
+    </section>
+    
+      
+      <script>
+      document.getElementById('generateReportBtn').addEventListener('click', function() {
+        fetch('/generate_report')
+          .then(response => response.json())
+          .then(data => {
+            if (data.message) {
+              alert('Report generated successfully!');
+              
+              // Load seizure timestamps dynamically if available
+              fetchTimestamps();  // You can define this separately or modify below
+              
+              // Load EEG plot
+              document.getElementById('eegImage').src = '/static/eeg_plot.png';
+              
+              // Show download button
+              document.getElementById('downloadReportBtn').style.display = 'inline-block';
+            } else {
+              alert('Error generating report: ' + (data.error || 'Unknown error'));
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Failed to generate report.');
+          });
+      });
+      
+      // Fetch timestamps separately if needed (Optional — you can adjust according to your API response)
+      function fetchTimestamps() {
+        fetch('/generate_report')
+          .then(response => response.json())
+          .then(data => {
+            if (data.seizure_times) {
+              const list = document.getElementById('timestampsList');
+              list.innerHTML = ''; // Clear old
+              data.seizure_times.forEach(timestamp => {
+                const li = document.createElement('li');
+                li.textContent = timestamp.toFixed(2) + " seconds"; // Rounded
+                list.appendChild(li);
+              });
+            }
+          });
+      }
+      
+      document.getElementById('downloadReportBtn').addEventListener('click', function() {
+        window.location.href = '/download_report'; // Trigger the download
+      });
+      </script>
+      
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 EEG Real-Time Monitoring | All Rights Reserved</p>
+    </footer>
+
+    <!-- Script Files -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../static/test.js"></script>
+</body>
+
+</html>
