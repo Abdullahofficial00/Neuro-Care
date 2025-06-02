@@ -1,42 +1,167 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sign Up | NeuroCare</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}">
-</head>
-<body>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style1.css') }}" />
+    <style>
+        /* Ensure box-sizing includes padding/border in width */
+        *, *::before, *::after {
+        box-sizing: border-box;
+        }
+
+        .login-container {
+        width: 400px; /* increased width to better fit 2-column inputs */
+        max-width: 90vw;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        form.signup-form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px 15px; /* vertical and horizontal gap */
+        }
+
+        form.signup-form > div {
+        display: flex;
+        flex-direction: column;
+        min-width: 0; /* prevent overflow */
+        }
+
+        form.signup-form label {
+        margin-bottom: 8px;
+        text-align: left;
+        color: #ccc;
+        font-size: 1rem;
+        white-space: nowrap;
+        }
+
+        form.signup-form input[type="text"],
+        form.signup-form input[type="email"],
+        form.signup-form input[type="number"],
+        form.signup-form input[type="password"] {
+        width: 100%;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        font-size: 1rem;
+        outline: none;
+        transition: 0.3s;
+        min-width: 0;
+        }
+
+        form.signup-form input[type="text"]:focus,
+        form.signup-form input[type="email"]:focus,
+        form.signup-form input[type="number"]:focus,
+        form.signup-form input[type="password"]:focus {
+        background: rgba(0, 255, 255, 0.1);
+        box-shadow: 0 0 10px #00f7ff;
+        }
+
+        /* Make submit button span two columns */
+        form.signup-form input[type="submit"] {
+        grid-column: 1 / -1;
+        padding: 12px;
+        background: #00f7ff;
+        border: none;
+        border-radius: 10px;
+        color: #0f2027;
+        font-weight: bold;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s;
+        }
+
+        form.signup-form input[type="submit"]:hover {
+        box-shadow: 0 0 10px #00f7ff;
+        }
+
+        /* Responsive: single column on small screens */
+        @media (max-width: 480px) {
+        .login-container {
+            width: 95vw;
+            padding: 30px 20px;
+        }
+
+        form.signup-form {
+            grid-template-columns: 1fr;
+            gap: 15px 0;
+        }
+
+        form.signup-form input[type="submit"] {
+            grid-column: 1;
+        }
+        }
+    </style>
+    </head>
+    <body>
     <div class="background-animation"></div> <!-- Animated background -->
 
     <div class="login-container"> <!-- Using same glassmorphism container -->
         <h2>NeuroCare Sign Up</h2>
-        <form action="{{ url_for('signup') }}" method="POST">
+        <form action="{{ url_for('signup') }}" method="POST" class="signup-form">
+            <!-- Doctor ID is auto-assigned, so hidden from user -->
+            <input type="hidden" name="doctor_id" value="{{ new_doctor_id }}">
 
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <div>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required />
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+            </div>
+            <div>
+                <label for="contact">Contact Number</label>
+                <input type="text" id="contact" name="contact" required />
+            </div>
+            <div>
+                <label for="hospital">Hospital Name</label>
+                <input type="text" id="hospital" name="hospital" required />
+            </div>
+            <div>
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" required />
+            </div>
+            <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+            </div>
+            <div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required />
+            </div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <!-- HIDDEN fields -->
+            <input type="hidden" name="card_number" value="" />
+            <input type="hidden" name="cvv" value="" />
+            <input type="hidden" name="exp_date" value="" />
+            <input type="hidden" name="subscription" value="" />
+            <input type="hidden" name="sub_start" value="" />
+            <input type="hidden" name="sub_end" value="" />
+            <input type="hidden" name="role" value="Doctor" />
 
-            <label for="contact">Contact Number</label>
-            <input type="text" id="contact" name="contact" required>
-
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
-
-            <input type="hidden" id="role" name="role" value="Patient"> <!-- Default hidden -->
-
-            <input type="submit" value="Sign Up">
+            <input type="submit" value="Sign Up" />
         </form>
 
+
         <div class="signup-link">
-            Already have an account? <a href="{{ url_for('login') }}">Login</a>
+        Already have an account? <a href="{{ url_for('login') }}">Login</a>
         </div>
 
-        <div class="footer-text">
-            © 2025 NeuroCare
-        </div>
+        <div class="footer-text">© 2025 NeuroCare</div>
     </div>
 </body>
 </html>

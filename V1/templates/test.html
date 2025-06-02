@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EEG Real-Time Monitoring</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../static/test.css" />
+</head>
+
+<body>
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <div class="logo">Neurocare</div>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('about') }}">About</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Patient Info Form -->
+  <div id="patientForm">
+    <h3>Enter Patient Information</h3>
+    <form id="patientFormData">
+      <label for="patientName">Name:</label>
+      <input type="text" id="patientName" name="patientName" required />
+
+      <label for="caregiverName">Caregiver Name:</label>
+      <input type="text" id="caregiverName" name="caregiverName" required />
+
+      <label for="contact">Contact:</label>
+      <input type="tel" id="contact" name="contact" required />
+
+      <label for="patientIssue">Patient Issue:</label>
+      <input type="text" id="patientIssue" name="patientIssue" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- File Upload Section -->
+  <section id="uploadSection" class="section">
+    <div class="panel form-panel">
+        <h3>Epileptic Seizure Monitoring System</h3>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <label id="dragDropZone" for="fileUpload" class="drag-drop-zone" style="border: 2px dashed #999; padding: 40px; display: block; text-align: center; cursor: pointer;">
+                <p>Drag & drop your EEG (.edf) file here</p>
+                <p><strong>or click to select a file</strong></p>
+                <input type="file" id="fileUpload" name="file" accept=".edf" style="display:none;" />
+            </label>
+        </form>
+    </div>
+    </section>
+
+    <!-- Graph and Log Panels -->
+    <div class="graph-log-container">
+    <!-- EEG Graph -->
+        <div class="graph-panel">
+                <h3 class="panel-header">EEG Data Graph</h3>
+            <div id="chartContainer">
+                <canvas id="graph" style="height: 400px; width: 100%"></canvas>
+            </div>
+            <div class="graphbutton">
+            <button id="followLive">Follow Live</button>
+            <button id="saveGraphButton">Save Graph</button>
+        </div>
+    </div>
+
+    <!-- EEG Data Log -->
+    <div class="log-panel">
+        <h3 class="panel-header">EEG Data Log</h3>
+        <div class="content"></div>
+
+        <div class="eeg-table-container">
+            <table id="eegTable" class="eeg-table">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Fp1</th>
+                        <th>Fp2</th>
+                        <th>F3</th>
+                        <th>F4</th>
+                        <th>C3</th>
+                        <th>C4</th>
+                        <th>P3</th>
+                        <th>P4</th>
+                        <th>O1</th>
+                        <th>O2</th>
+                        <th>F7</th>
+                        <th>F8</th>
+                        <th>T3</th>
+                        <th>T4</th>
+                        <th>T5</th>
+                        <th>T6</th>
+                        <th>Fz</th>
+                        <th>Cz</th>
+                        <th>Pz</th>
+                        <th>Alerts</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Dynamic rows -->
+                </tbody>
+            </table>
+        </div>
+
+        <div class="graphbutton" id="fixedDownloadBtn">
+            <button id="downloadCSV">Download CSV</button>
+        </div>
+    </div>
+
+
+    <!-- Report Section -->
+    <section class="report-section">
+        <div class="panel report-panel">
+        <h2>Patient Report</h2>
+
+        <!-- Report Loader -->
+        <div id="reportLoader" style="display: none; text-align: center;">
+            <p><strong>Generating report...</strong></p>
+            <div class="spinner" style="margin-top:10px;"></div>
+        </div>
+
+        <!-- Report Content -->
+        <div id="reportContent" style="display: none;">
+        <!-- Patient Info Display -->
+        <div id="patientDetails" style="display: none;">
+            <h3>Patient Information</h3>
+            <p><strong>Name:</strong> <span id="reportPatientName"></span></p>
+            <p><strong>Caregiver Name:</strong> <span id="reportCaregiverName"></span></p>
+            <p><strong>Contact:</strong> <span id="reportContact"></span></p>
+            <p><strong>Patient Issue:</strong> <span id="reportPatientIssue"></span></p>
+        </div>
+
+        <!-- EEG Plot & Timestamps -->
+        <div class="eeg-timestamp-container">
+            <div id="eegPlot">
+            <h3>EEG Signal and Prediction</h3>
+            <img id="eegImage" src="" alt="EEG Plot" style="max-width:100%; height:auto;" />
+        </div>
+
+          <div id="seizureTimestamps" style="display: none;">
+            <h3>Seizure Timestamps</h3>
+            <div style="max-height: 400px; overflow-y: auto; border: 1px solid #ccc; border-radius: 5px;">
+              <table id="timestampsTable" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                  <tr>
+                    <th>Timestamps</th>
+                    <th>--></th>
+                    <th>   </th>
+                    <th>   </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- JS populated -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Report Preview -->
+        <div id="reportPreview" style="margin-top: 20px;">
+          <h3>Preview Report</h3>
+          <iframe id="reportFrame" src="" style="width:100%; height:500px; border:none;"></iframe>
+        </div>
+
+        <!-- Report Download -->
+        <div class="report-buttons">
+          <button id="downloadReportBtn" style="display: none;">Download Report</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2025 EEG Real-Time Monitoring | All Rights Reserved</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Handle patient info submission
+    document.getElementById('patientFormData').addEventListener('submit', function (event) {
+      event.preventDefault();
+      document.getElementById('reportPatientName').textContent = document.getElementById('patientName').value;
+      document.getElementById('reportCaregiverName').textContent = document.getElementById('caregiverName').value;
+      document.getElementById('reportContact').textContent = document.getElementById('contact').value;
+      document.getElementById('reportPatientIssue').textContent = document.getElementById('patientIssue').value;
+
+      document.getElementById('patientForm').style.display = 'none';
+      document.getElementById('reportContent').style.display = 'block';
+      document.getElementById('patientDetails').style.display = 'block';
+    });
+  </script>
+
+  <!-- External Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.2.1/dist/chartjs-plugin-zoom.min.js"></script>
+  <script src="../static/test.js"></script>
+</body>
+
+</html>

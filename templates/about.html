@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - NeuroCare Telemedicine</title>
+  <link rel="stylesheet" href="../static/about.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo">Neurocare</div>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('home') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+  </header>
+
+  <main>
+    <h2>About NeuroCare</h2>
+    <section class="card">
+      <h2>Introduction</h2>
+      <p>
+        NeuroCare is an advanced Telemedicine Web Application designed to transform healthcare delivery by enabling remote consultations, diagnostics, and patient monitoring. Focused on accessibility, scalability, and security, it bridges the gap between healthcare providers and patients—especially in rural and underserved regions.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Purpose</h2>
+      <p>
+        The purpose of this software requirement specification (SRS) is to outline the functionalities and goals of the NeuroCare platform. This platform aims to enhance healthcare reach by enabling virtual consultations, follow-ups, and diagnostics, reducing the necessity of in-person hospital visits. Healthcare providers will be equipped with tools to deliver high-quality care remotely, using AI-assisted decision-making, thereby streamlining both patient and physician workflows.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>Scope</h2>
+      <p>
+        The system encompasses patient registration, appointment scheduling, electronic medical record (EMR) management, virtual consultation modules, and a secure prescription service. Additionally, AI-powered diagnostic support tools will assist healthcare professionals in making evidence-based decisions. The platform is being developed with a focus on user experience, ensuring ease of use for both technical and non-technical users across diverse age and literacy levels.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 NeuroCare Telemedicine | All rights reserved.</p>
+  </footer>
+</body>
+</html>

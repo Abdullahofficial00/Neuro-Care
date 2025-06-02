@@ -1,0 +1,125 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #333;
+  color: #f0f0f0;
+}
+
+header {
+  background-color: #00ffff;
+  color: #333;
+  text-align: center;
+  padding: 20px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Navbar styles */
+.navbar {
+    background-color: #000;
+    color: #00ffff;
+    padding: 15px 30px;
+    border-bottom: 2px solid #00ffff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #00ffff;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #00ffff;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #33ffff;
+}
+
+
+main {
+  padding: 20px;
+}
+
+.card {
+  background-color: #222;
+  border-left: 5px solid #00ffff;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 700px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+}
+
+h1, h2 {
+  font-family: 'Roboto', sans-serif;
+  align-items: center;
+  color: #00ffff;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-form label {
+  margin: 10px 0 5px;
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #444;
+  color: #fff;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: 2px solid #00ffff;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background-color: #00ffff;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #00cccc;
+}
+
+footer {
+  background-color: #111;
+  color: #ccc;
+  text-align: center;
+  padding: 15px;
+  margin-top: 40px;
+}
