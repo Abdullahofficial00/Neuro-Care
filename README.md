@@ -25,6 +25,7 @@ Backend: Python (Flask)
 Libraries: Matplotlib, NumPy, Pandas, ReportLab, and more
 
 **📄 Complete Hybrid CNN-LSTM Model Code**
+
 [Click the link to Complete Model code repository.](https://github.com/shaheerkhalid989/seizure_detection_model.git)
 
 **🛠️ Setup Instructions**
