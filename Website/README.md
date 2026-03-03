@@ -1,20 +1,89 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# NeuroCare – AI Seizure Detection System
 
-# Run and deploy your AI Studio app
+NeuroCare is an intelligent system designed to assist in the monitoring and detection of epileptic seizures using EEG data and machine learning. The platform provides tools for data analysis, visualization, and prediction to support medical professionals and researchers.
 
-This contains everything you need to run your app locally.
+## Features
 
-View your app in AI Studio: https://ai.studio/apps/1ece4060-7a74-4260-8469-e91c22f7b3bd
+* EEG data monitoring and visualization
+* AI-based seizure detection and prediction
+* Patient data management
+* Secure authentication and access control
+* Report generation and analytics
+* Responsive web interface
 
-## Run Locally
+## Project Structure
 
-**Prerequisites:**  Node.js
+```
+public/        Static assets
+src/           Application source code
+index.html     Main HTML entry point
+package.json   Project dependencies and scripts
+vite.config.ts Vite configuration
+```
 
+## Prerequisites
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+* Node.js (version 18 or higher recommended)
+* npm package manager
+
+## Installation
+
+1. Clone the repository
+
+```
+git clone https://github.com/Abdullahofficial00/Neuro-Care.git
+```
+
+2. Navigate to the project directory
+
+```
+cd Neuro-Care
+```
+
+3. Install dependencies
+
+```
+npm install
+```
+
+## Environment Setup
+
+Create a `.env.local` file in the root directory and add your Gemini API key:
+
+```
+GEMINI_API_KEY=your_api_key_here
+```
+
+## Run the Project
+
+Start the development server:
+
+```
+npm run dev
+```
+
+The application will run at:
+
+```
+http://localhost:3000
+```
+
+## Build for Production
+
+```
+npm run build
+```
+
+To preview the production build:
+
+```
+npm run preview
+```
+
+## Repository
+
+https://github.com/Abdullahofficial00/Neuro-Care
+
+## Documentation
+
+Thesis and additional project documentation are available in the repository.
